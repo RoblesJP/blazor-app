@@ -1,0 +1,42 @@
+﻿@page "/categories"
+
+<PageTitle>Categories</PageTitle>
+
+@using BlazorApp.Entities
+@using System.Text.Json;
+@using MudBlazor
+@inject IHttpClientFactory HttpClientFactory
+
+<h1>Categories</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (categories == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <MudTable Items="@categories" Hover="true" SortLabel="Sort By">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<Category, object>(x=>x.Name)">Nombre</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Nombre">@context.Name</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+        </PagerContent>
+    </MudTable>
+}
+
+@code {
+    private List<Category>? categories;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = HttpClientFactory.CreateClient("MyHttpClient");
+
+        categories = await httpClient.GetFromJsonAsync<List<Category>>("api/Categories");
+    }
+}

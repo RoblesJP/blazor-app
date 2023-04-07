@@ -1,0 +1,52 @@
+﻿@page "/items"
+
+<PageTitle>Items</PageTitle>
+
+@using BlazorApp.Entities
+@using System.Net.Http
+@using System.Net.Http.Json
+@inject IHttpClientFactory HttpClientFactory
+
+<h1>Items</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (items == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price / 100gr</th>
+                <th>Price / kg</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in items)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Category.Name</td>
+                    <td>@item.Price100gr</td>
+                    <td>@item.PriceKg</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Item>? items;
+
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = HttpClientFactory.CreateClient("MyHttpClient");
+
+        items = await httpClient.GetFromJsonAsync<List<Item>>("api/Items");
+    }
+}
