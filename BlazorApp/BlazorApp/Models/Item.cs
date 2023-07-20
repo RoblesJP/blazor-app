@@ -1,4 +1,4 @@
-﻿namespace BlazorApp.Entities
+﻿namespace BlazorApp.Models
 {
     public class Item
     {

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BlazorApp.Entities
+namespace BlazorApp.Models
 {
     public class Category
     {

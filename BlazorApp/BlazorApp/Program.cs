@@ -1,4 +1,4 @@
-using BlazorApp.Entities;
+using BlazorApp.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor.Services;
